@@ -95,3 +95,6 @@ ENV/
 
 # debugging
 scripts/debug*
+
+# mac
+.DS_Store
