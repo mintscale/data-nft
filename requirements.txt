@@ -1,4 +1,4 @@
-aioredis==2.0.1
+aioredis
 alabaster==0.7.12
 anyio==3.5.0
 asgiref==3.5.0
@@ -43,7 +43,7 @@ pipenv==2022.7.24
 platformdirs==2.5.2
 pptree==3.1
 psycopg2==2.9.3
-pydantic==1.9.0
+pydantic
 Pygments==2.11.2
 pylev==1.4.0
 pymongo==4.2.0
@@ -54,7 +54,7 @@ python-multipart==0.0.5
 python-ulid==1.1.0
 pytz==2021.3
 redis==4.2.2
-redis-om==0.0.26
+redis-om
 requests==2.27.1
 rfc3986==1.5.0
 s3transfer==0.5.2
