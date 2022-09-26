@@ -54,7 +54,7 @@ class XRPLNFT:
     ) -> None:
         self.mint_tx = NFTokenMint(
                 account=self.issuer,
-                token_taxon=taxon,
+                nftoken_taxon=taxon,
                 uri=self.uri,
                 flags=flags,
                 transfer_fee=transfer_fee,
