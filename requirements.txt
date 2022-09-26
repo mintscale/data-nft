@@ -77,3 +77,4 @@ wrapt
 xrpl-py==1.5.0
 xumm-sdk-py
 zipp
+gunicorn
