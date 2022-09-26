@@ -80,6 +80,7 @@ virtualenv==20.16.2
 virtualenv-clone==0.5.7
 websocket-client==1.2.3
 websockets==10.2
+wheel
 wkhtmltopdf==0.2
 wrapt==1.14.0
 xrpl-py==1.5.0
