@@ -73,7 +73,7 @@ superftp==1.0.3
 tabulate==0.8.9
 types-redis==4.2.0
 types-six==1.16.15
-typing-extensions==3.10.0.2
+typing-extensions
 urllib3==1.26.5
 uvicorn==0.17.6
 virtualenv==20.16.2
