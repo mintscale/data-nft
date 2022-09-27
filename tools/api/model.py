@@ -44,3 +44,16 @@ class CarData(BaseModel):
         arbitrary_types_allowed = True
         json_encoders = {ObjectId: str}
 
+class MintedCarData(BaseModel):
+    vin: str
+    token_id: str
+    car_data: CarData
+    car_data_pinned: PinnedFile
+    inspection_report: PinnedFile
+    minted_data: MintedFile
+
+    class Config:
+        allow_population_by_field_name = True
+        arbitrary_types_allowed = True
+        json_encoders = {ObjectId: str}
+

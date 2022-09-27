@@ -8,6 +8,7 @@ top = """
     <head>
         <meta name="pdfkit-page-size" content="Legal"/>
         <meta name="pdfkit-orientation" content="Landscape"/>
+        <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
     </head>
 """
 
@@ -37,12 +38,15 @@ record_table_header = """
             <th>Registration Year</th>
             <th>Service Type</th>
             <th>Event Type</th>
-            <th>Inspection Report</th>
+            <th>Event Report</th>
+            <th>NFT Mint Certificate ID</th>
+            <th>IPFS Metadata</th>
         </tr>
     </thead>
 """
+ipfs_logo_src = "src='https://upload.wikimedia.org/wikipedia/commons/1/18/Ipfs-logo-1024-ice-text.png' width='20' height='20'"
 
-def get_record_row(record: Dict):
+def get_car_record_row(token_id: str, record: Dict, inspection_report_pin: Dict, car_record_pin: Dict):
     return (
         "<tr>"
         f"<td>{record['datetime']}</td>"
@@ -54,57 +58,55 @@ def get_record_row(record: Dict):
         f"<td>{record['registration_year']}</td>"
         f"<td>{', '.join(record['service_type'])}</td>"
         f"<td>{', '.join(record['event_type'])}</td>"
-        f"<td>{record['inspection_report_uri']}</td>"
+        f"<td><a href={inspection_report_pin['gateway_url']}><img alt='Event Report' {ipfs_logo_src}></a></td>"
+        f"<td>{token_id}</td>"
+        f"<td><a href={car_record_pin['gateway_url']}><img alt='Event Metadata' {ipfs_logo_src}></a></td>"
         "</tr>"
     )
 
-def get_record_table(record_index: int, record: Dict) -> str:
+def get_record_table(
+    record_index: int, 
+    token_id: Dict,
+    car_record_pin:  Dict,
+    inspection_report_pin:  Dict,
+    car_record: Dict,
+    minted_data: Dict,
+) -> str:
     return (
         f"<span style='font-size:20px'><i>Record {record_index}</i></span> <br/><br/>"
         f"{record_table_header}"
         "<tbody>"
-        f"{get_record_row(record)}"
+        f"{get_car_record_row(token_id, car_record, inspection_report_pin, car_record_pin)}"
         "</tbody>"
         "</table>"
     )
 
-test = """
-    {
-    "vin": "1234",
-    "logo_name": "good",
-    "logo_uri": "https://icon-library.com/images/2018/3265179_rage-meme-black-mirror-shut-up-and-dance.png",
-    "inspection_report_uri": "https://aqrl.mypinata.cloud/ipfs/QmbgNJ1LvoyVQPt7BSie3M7b5s18GYTBFTDcWQS5LfVQxT",
-    "model": "Honda",
-    "make": "Civic",
-    "manufacture_year": "2022",
-    "registration_year": "2022",
-    "location": [
-      "USA",
-      "California"
-    ],
-    "service_type": [
-      "Regular"
-    ],
-    "event_type": [
-      "New Car Service"
-    ],
-    "datetime": "01/01/2022",
-    "gps": "10.10,20.20"
-  },
-"""
 def get_certificate_html(data: List) -> str:
     record_html = ""
     index = 1
-    vin = data[0]["vin"]
-    logo_name = data[0]["logo_name"]
-    logo_uri = data[0]["logo_uri"]
-    for record in data:
-        record_html += get_record_table(index, record)
+    car_data = data[0]["car_data"]
+    vin = car_data["vin"]
+    logo_name = car_data["logo_name"]
+    logo_uri = car_data["logo_uri"]
+    for mint_record in data:
+        token_id = mint_record["token_id"]
+        car_record_pin = mint_record["car_data_pinned"]
+        inspection_report_pin = mint_record["inspection_report"]
+        car_record = mint_record["car_data"]
+        minted_data = mint_record["minted_data"]
+        record_html += get_record_table(
+            index,
+            token_id,
+            car_record_pin,
+            inspection_report_pin,
+            car_record,
+            minted_data
+        )
         index = index + 1
     return (
         f"{top}"
         f"<img src='{logo_uri}' alt='{logo_name}' width='50' height='50'>"
-        "<span style='font-size:50px; font-weight:bold'>&nbsp;Car Inspection Report</span>"
+        "<span style='font-size:50px; font-weight:bold'>&nbsp;Carscan Inspection Report</span>"
         "<br/><br/>"
         f"<span style='font-size:30px'>VIN {vin}</span> <br/><br/>"
         f"{record_html}"
@@ -121,7 +123,6 @@ def parse_metadata_json(metadata_json: Path) -> Dict:
 def generate_pdf_report(data: List, filepath: Path):   
     with filepath.open("wb") as file:
         jsonpdf = pdfkit.from_string(get_certificate_html(data), options=options, css='styled-table.css')
-        # jsonpdf = pdfkit.from_string(json.dumps(data))
         file.write(jsonpdf)
 
 async def process_car_event(vin: str, logo_name: str, logo_uri: str, inspection_report_uri: str, metadata_json: Path) -> CarData:

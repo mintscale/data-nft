@@ -29,15 +29,15 @@ async def get_mint_record(
             get_nfts = await account.get_nfts(limit=num_records)
             nft_list += get_nfts.result["account_nfts"]
             logger.info(f"GET_NFTS => {len(nft_list)}")
-        for nft in nft_list:
-            taxon = nft["NFTokenTaxon"]
-            tokenID = nft["NFTokenID"]
-            token_uri = hex_to_str(nft["URI"])
-            minted[token_uri] = {"tokenID": tokenID, "taxon": taxon}
-        if uri in minted:
-            mint_record = MintedFile(uri=uri, token_id=minted[uri]["tokenID"], token_taxon=minted[uri]["taxon"])
-            logger.info(f"Found Mint Record: {mint_record}")
-            return mint_record
+            for nft in nft_list:
+                taxon = nft["NFTokenTaxon"]
+                tokenID = nft["NFTokenID"]
+                token_uri = hex_to_str(nft["URI"])
+                minted[token_uri] = {"tokenID": tokenID, "taxon": taxon}
+            if uri in minted:
+                mint_record = MintedFile(uri=uri, token_id=minted[uri]["tokenID"], token_taxon=minted[uri]["taxon"])
+                logger.info(f"Found Mint Record: {mint_record}")
+                return mint_record
     except Exception as e:
         logger.error(f"EXCEPTION ENCOUNTERED: {e}")
     finally:

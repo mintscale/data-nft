@@ -13,7 +13,7 @@
     "s3_json_dir": "nft_images/json_meta/",
     "image_dir": "/Users/gaurav/workspace/aqrl/carscan-docs/",
     "json_dir": "/Users/gaurav/workspace/aqrl/carscan-docs/json/",
-    "xrpl_account": "r3kPGkiN6dDz9rVF9dPhYTHw4yFux213gs",
-    "xrpl_secret": "snvi1tCAhyYuCfX2KhrEVBaitBo5Z",
+    "xrpl_account": "rnS9VauC451c2RCTDezeqfn58RMNuQwJRo",
+    "xrpl_secret": "ssYd3NXbQxY2CEdyNDifti94yBUQE",
     "transfer_fee": 1000
 }

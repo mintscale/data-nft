@@ -1,4 +1,4 @@
-from model import PinnedFile, MintedFile, CarData
+from model import PinnedFile, MintedFile, CarData, MintedCarData
 import os
 import motor.motor_asyncio
 
@@ -7,9 +7,14 @@ database = client.AQRL
 pin_collection = database.IPFSPinnedFiles
 mint_collection = database.XRPLMintedFiles
 car_collection = database.CARScanDB
+minted_car_collection = database.CARScanMintDB
 
 async def fetch_one_car_by_vin(vin: str):
     document = await car_collection.find_one({"vin": vin})
+    return document 
+
+async def fetch_one_minted_car_by_vin_token_id(vin: str, token_id: str):
+    document = await minted_car_collection.find_one({"vin": vin, "token_id": token_id})
     return document 
 
 async def fetch_one_pinned_file_by_name(name: str):
@@ -35,11 +40,25 @@ async def fetch_all_cars():
         cars.append(CarData(**document))
     return cars
 
+async def fetch_all_minted_cars():
+    cars = []
+    cursor = minted_car_collection.find({})
+    async for document in cursor:
+        cars.append(MintedCarData(**document))
+    return cars
+
 async def fetch_all_car_records_by_vin(vin: str):
     cars = []
     cursor = car_collection.find({"vin": vin})
     async for document in cursor:
         cars.append(CarData(**document))
+    return cars
+
+async def fetch_all_minted_car_records_by_vin(vin: str):
+    cars = []
+    cursor = minted_car_collection.find({"vin": vin})
+    async for document in cursor:
+        cars.append(MintedCarData(**document))
     return cars
 
 async def fetch_all_pinned_files():
@@ -61,6 +80,11 @@ async def create_car_record(car_data):
     result = await car_collection.insert_one(document)
     return result
 
+async def create_minted_car_record(minted_car_data):
+    document = minted_car_data
+    result = await minted_car_collection.insert_one(document)
+    return result
+
 async def create_pinned_file(pinned_file):
     document = pinned_file
     result = await pin_collection.insert_one(document)
@@ -73,6 +97,10 @@ async def create_minted_file(minted_file):
 
 async def remove_car_by_vin(vin):
     await car_collection.delete_one({"vin": vin})
+    return True
+
+async def remove_minted_car_by_vin(vin):
+    await minted_car_collection.delete_one({"vin": vin})
     return True
 
 async def remove_pinned_file_by_name(name):
