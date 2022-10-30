@@ -39,12 +39,15 @@ record_table_header = """
             <th>Service Type</th>
             <th>Event Type</th>
             <th>Event Report</th>
-            <th>NFT Mint Certificate ID</th>
+            <th>NFT Certificate</th>
             <th>IPFS Metadata</th>
         </tr>
     </thead>
 """
 ipfs_logo_src = "src='https://upload.wikimedia.org/wikipedia/commons/1/18/Ipfs-logo-1024-ice-text.png' width='20' height='20'"
+nft_logo_src = "src='https://cdn-icons-png.flaticon.com/512/6298/6298900.png' width='25' height='25'"
+
+NFT_DEVNET_EXPLORER_ROOT="https://nft-devnet.xrpl.org/nft"
 
 def get_car_record_row(token_id: str, record: Dict, inspection_report_pin: Dict, car_record_pin: Dict):
     return (
@@ -59,14 +62,14 @@ def get_car_record_row(token_id: str, record: Dict, inspection_report_pin: Dict,
         f"<td>{', '.join(record['service_type'])}</td>"
         f"<td>{', '.join(record['event_type'])}</td>"
         f"<td><a href={inspection_report_pin['gateway_url']}><img alt='Event Report' {ipfs_logo_src}></a></td>"
-        f"<td>{token_id}</td>"
+        f"<td><a href={NFT_DEVNET_EXPLORER_ROOT}/{token_id}><img alt='NFT Certificate' {nft_logo_src}></a></td>"
         f"<td><a href={car_record_pin['gateway_url']}><img alt='Event Metadata' {ipfs_logo_src}></a></td>"
         "</tr>"
     )
 
 def get_record_table(
     record_index: int, 
-    token_id: Dict,
+    token_id: str,
     car_record_pin:  Dict,
     inspection_report_pin:  Dict,
     car_record: Dict,

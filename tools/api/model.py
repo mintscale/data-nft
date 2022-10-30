@@ -24,6 +24,7 @@ class MintedFile(BaseModel):
         arbitrary_types_allowed = True
         json_encoders = {ObjectId: str}
 
+
 class CarData(BaseModel):
     vin: str
     logo_name: str
