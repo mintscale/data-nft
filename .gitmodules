@@ -1,0 +1,3 @@
+[submodule "tools/signoz"]
+	path = tools/signoz
+	url = https://github.com/SigNoz/signoz.git
