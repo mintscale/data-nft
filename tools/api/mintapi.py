@@ -28,7 +28,7 @@ from fastapi.encoders import jsonable_encoder
 from model import PinnedFile, MintedFile, CarData, MintedCarData
 from bson import ObjectId
 from fastapi.middleware.cors import CORSMiddleware
-from carscan import process_car_event, generate_pdf_report
+from carscan import process_car_event, parse_metadata_json, missing_metadata_keys, generate_pdf_report
 import tempfile
 from starlette.background import BackgroundTask
 import os
@@ -210,12 +210,16 @@ async def mint_file(uri: str, taxon: int):
 async def record_car_event(vin: str, logo_name: str, logo_uri: str, inspection_report_uri: str, metadata_json: UploadFile):
     tmp_metadata_path = save_upload_file_tmp(metadata_json)
     inspection_report_pinned : PinnedFile = await pin_uri_to_ipfs(inspection_report_uri)
+    metadata = parse_metadata_json(tmp_metadata_path)
+    missing_keys = missing_metadata_keys(metadata=metadata)
+    if len(missing_keys) > 0:
+       raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Missing entries in metadata json: {missing_keys}") 
     car_record : CarData = await process_car_event(
         vin=vin, 
         logo_name=logo_name, 
         logo_uri=logo_uri,
         inspection_report_uri=inspection_report_pinned["ipfs_url"],
-        metadata_json=tmp_metadata_path)
+        metadata=metadata)
     car_data_pinned : PinnedFile = await pin_car_data_to_ipfs(car_record)
     car_data_nft : MintedFile = await mint_file(uri=car_data_pinned["ipfs_url"], taxon=random.randint(1, 2147483647))
     minted_record : MintedCarData = MintedCarData(

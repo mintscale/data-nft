@@ -46,8 +46,8 @@ record_table_header = """
 """
 ipfs_logo_src = "src='https://upload.wikimedia.org/wikipedia/commons/1/18/Ipfs-logo-1024-ice-text.png' width='20' height='20'"
 nft_logo_src = "src='https://cdn-icons-png.flaticon.com/512/6298/6298900.png' width='25' height='25'"
-
 NFT_DEVNET_EXPLORER_ROOT="https://nft-devnet.xrpl.org/nft"
+METADATA_KEYS = ["model", "make", "manufacture_year", "registration_year", "location", "service_type", "event_type", "datetime", "gps"]
 
 def get_car_record_row(token_id: str, record: Dict, inspection_report_pin: Dict, car_record_pin: Dict):
     return (
@@ -123,13 +123,19 @@ def parse_metadata_json(metadata_json: Path) -> Dict:
         data = json.load(metafile)
     return data
 
+def missing_metadata_keys(metadata: Dict) -> List[str]:
+    missing_keys = []
+    for key in METADATA_KEYS:
+        if key not in metadata:
+            missing_keys.append(key)
+    return missing_keys
+
 def generate_pdf_report(data: List, filepath: Path):   
     with filepath.open("wb") as file:
         jsonpdf = pdfkit.from_string(get_certificate_html(data), options=options, css='styled-table.css')
         file.write(jsonpdf)
 
-async def process_car_event(vin: str, logo_name: str, logo_uri: str, inspection_report_uri: str, metadata_json: Path) -> CarData:
-    metadata = parse_metadata_json(metadata_json)
+async def process_car_event(vin: str, logo_name: str, logo_uri: str, inspection_report_uri: str, metadata: Dict) -> CarData:
     record : CarData = CarData(
         vin=vin,
         logo_name=logo_name,
