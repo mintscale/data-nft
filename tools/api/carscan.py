@@ -5,24 +5,35 @@ import json
 import pdfkit
 
 top = """
+    <html>
     <head>
         <meta name="pdfkit-page-size" content="Legal"/>
         <meta name="pdfkit-orientation" content="Landscape"/>
         <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
+        <style>
+        body {
+            width: 95%;
+            background: -webkit-linear-gradient(360deg, #BC0070 0%, #A6086A 4.63%, #940E65 8.02%, #7E165F 12.53%, #662058 17.51%, #512753 22.71%, #432B51 27.91%, #382D51 33.03%, #322D52 37.97%, #2A3055 43.25%, #23345B 48.09%, #193D66 53.45%, #0E4874 58.55%, #0D5581 63.73%, #0F638F 68.84%, #20749F 74.3%, #3585AE 78.94%, #3E94BA 84%, #45A3C7 89.02%, #45B3D5 94.32%, #44C2E1 99.48%);
+            padding-top: 20 !important;
+            padding-left: 20 !important;
+            background-position: center;
+            background-repeat: repeat-y;
+            background-size: cover;
+        }
+        </style>
     </head>
 """
 
 options = {
     'page-size': 'Letter',
-    'margin-top': '0.75in',
-    'margin-right': '0.75in',
-    'margin-bottom': '0.75in',
-    'margin-left': '0.75in',
+    'margin-top': '0',
+    'margin-right': '0',
+    'margin-bottom': '0',
+    'margin-left': '0',
     'encoding': "UTF-8",
-    'custom-header': [
-        ('Accept-Encoding', 'gzip')
-    ],
-    'no-outline': None
+    'dpi': '300',
+    'enable-smart-shrinking': None,
+    'orientation': 'Landscape'
 }
 
 record_table_header = """
@@ -76,12 +87,14 @@ def get_record_table(
     minted_data: Dict,
 ) -> str:
     return (
-        f"<span style='font-size:20px'><i>Record {record_index}</i></span> <br/><br/>"
+        "<div class='keep-together'>"
+        f"<span style='font-size:20px; color: #FFFFFF; font-family: 'Assistant';'><i>Record {record_index}</i></span> <br/><br/>"
         f"{record_table_header}"
         "<tbody>"
         f"{get_car_record_row(token_id, car_record, inspection_report_pin, car_record_pin)}"
         "</tbody>"
         "</table>"
+        "</div>"
     )
 
 def get_certificate_html(data: List) -> str:
@@ -108,13 +121,14 @@ def get_certificate_html(data: List) -> str:
         index = index + 1
     return (
         f"{top}"
+        "<body>"
         f"<img src='{logo_uri}' alt='{logo_name}' width='50' height='50'>"
-        "<span style='font-size:50px; font-weight:bold'>&nbsp;Carscan Inspection Report</span>"
+        f"<span style='font-size:50px; font-weight:bold; color: #FFFFFF;'>&nbsp;Carscan Inspection Report - VIN {vin}</span>"
         "<br/><br/>"
-        f"<span style='font-size:30px'>VIN {vin}</span> <br/><br/>"
         f"{record_html}"
-        '</div>'
-        '</div>'
+        "</body>"
+        "<div class='break-after'/>"
+        "</html>"
     )
 
 def parse_metadata_json(metadata_json: Path) -> Dict:
@@ -134,6 +148,7 @@ def generate_pdf_report(data: List, filepath: Path):
     with filepath.open("wb") as file:
         jsonpdf = pdfkit.from_string(get_certificate_html(data), options=options, css='styled-table.css')
         file.write(jsonpdf)
+         
 
 async def process_car_event(vin: str, logo_name: str, logo_uri: str, inspection_report_uri: str, metadata: Dict) -> CarData:
     record : CarData = CarData(

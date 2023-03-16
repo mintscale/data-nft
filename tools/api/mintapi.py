@@ -33,6 +33,7 @@ import tempfile
 from starlette.background import BackgroundTask
 import os
 import requests
+import PyPDF2
 
 app = FastAPI()
 
@@ -45,6 +46,22 @@ app.add_middleware(
     allow_methods = ["*"],
     allow_headers = ["*"],
 )
+
+def remove_last_page_pdf(pdf: Path):
+    # Open the PDF file
+    with pdf.open("rb") as pdf_file:
+        # Create a PDF reader object
+        pdf_reader = PyPDF2.PdfReader(pdf_file)
+        # Get the number of pages in the PDF file
+        num_pages = len(pdf_reader.pages)
+        # Create a PDF writer object
+        pdf_writer = PyPDF2.PdfWriter()
+        # Add all pages to the writer except the last one
+        for page in range(num_pages - 1):
+            pdf_writer.add_page(pdf_reader.pages[page])
+        # Save the new PDF file
+        with open(pdf.name, 'wb') as new_file:
+            pdf_writer.write(new_file) 
 
 def save_upload_file_tmp(upload_file: UploadFile) -> Path:
     try:
@@ -191,6 +208,7 @@ async def get_car_records_by_vin_pdf(vin: str):
         filepath = Path("./record.pdf")
         data = jsonable_encoder(response)
         generate_pdf_report(data, filepath)
+        remove_last_page_pdf(filepath)
         return filepath.resolve()
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"No cars with vin: {vin}")
 
