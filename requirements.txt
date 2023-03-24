@@ -43,7 +43,7 @@ pipenv
 platformdirs
 pptree
 psycopg2
-pydantic
+pydantic>=v1.10.0a1
 Pygments
 pylev
 pymongo
@@ -74,7 +74,7 @@ websockets
 wheel
 wkhtmltopdf
 wrapt
-xrpl-py==1.5.0
+xrpl-py>=1.5.0
 xumm-sdk-py
 zipp
 gunicorn

@@ -57,7 +57,7 @@ record_table_header = """
 """
 ipfs_logo_src = "src='https://upload.wikimedia.org/wikipedia/commons/1/18/Ipfs-logo-1024-ice-text.png' width='20' height='20'"
 nft_logo_src = "src='https://cdn-icons-png.flaticon.com/512/6298/6298900.png' width='25' height='25'"
-NFT_DEVNET_EXPLORER_ROOT="https://nft-devnet.xrpl.org/nft"
+NFT_DEVNET_EXPLORER_ROOT="https://devnet.xrpl.org/nft/"
 METADATA_KEYS = ["model", "make", "manufacture_year", "registration_year", "location", "service_type", "event_type", "datetime", "gps"]
 
 def get_car_record_row(token_id: str, record: Dict, inspection_report_pin: Dict, car_record_pin: Dict):

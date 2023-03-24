@@ -100,7 +100,7 @@ async def mint_nfts(uri: str, taxon: int, config_file: Path = Path("mint_config.
         account=acc,
         uri=uri,
         num_records=100,
-        logger=logger, 
+        logger=logger,
     )
     return mint_record
 

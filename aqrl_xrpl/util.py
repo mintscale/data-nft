@@ -5,11 +5,14 @@ from xrpl.wallet import Wallet
 
 JSON_RPC_URL_ALTNET = "https://s.altnet.rippletest.net:51234/"
 JSON_RPC_URL_PROD = "https://s2.ripple.com:51234/"
-WSS_RPC_URL_DEVNET = "wss://xls20-sandbox.rippletest.net:51233"
+WSS_RPC_URL_DEVNET = "wss://s.devnet.rippletest.net:51233/"
 
-DEVNET_WALLET_ADDRESS = "r99H6n1yzYp4m996CPSxLx6pazfguPtScf"
-DEVNET_WALLET_SECRET = "snZK5LZiTzdDDaJZqZwtwwDB98Un9"
-DEVNET_WALLET_SEQUENCE = 1099624
+DEVNET_WALLET_ADDRESS = "rp5KSdgxuyJANWMu8dwsgMghs9txGYxcor"
+DEVNET_WALLET_SECRET = "sEdV9Wm36f58CQdw8HMRziumaF9EUvw"
+DEVNET_WALLET_SEQUENCE = 27151922
+TESTNET_WALLET_ADDRESS = "rEh1oPPtYAAxi7yqfMmCMa4B84F26UHMtc"
+TESTNET_WALLET_SECRET = "sEdScpfM43aE45wvkS5Umx215SL4Axc"
+TESTNET_WALLET_SEQUENCE = 36413208
 
 def get_devnet_wallet():
     return Wallet(seed=DEVNET_WALLET_SECRET, sequence=DEVNET_WALLET_SEQUENCE)
