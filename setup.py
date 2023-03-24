@@ -10,11 +10,11 @@ with open('LICENSE') as f:
 setup(
     name='aqrl-xrpl-dev',
     version='0.1.0',
-    description='Aquarelle Finance XRPL Development Library',
+    description='MintScale Automotive Data NFT Library and Tooling',
     long_description=readme,
-    author='Aquarelle Finance',
-    author_email='aquarelle.finance@gmail.com',
-    url='https://github.com/aqrl/aqrl-xrpl-dev',
+    author='MintScale Inc',
+    author_email='admin@mintscale.io',
+    url='https://github.com/mintscale/data-nft/',
     license=license,
     packages=find_packages(exclude=('tests', 'docs'))
 )
