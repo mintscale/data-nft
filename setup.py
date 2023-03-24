@@ -8,7 +8,7 @@ with open('LICENSE') as f:
     license = f.read()
 
 setup(
-    name='aqrl-xrpl-dev',
+    name='data-nft',
     version='0.1.0',
     description='MintScale Automotive Data NFT Library and Tooling',
     long_description=readme,
