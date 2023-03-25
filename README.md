@@ -61,6 +61,10 @@ Create a MONGO DB instance and add in the credentials to the above command and r
 }
 ```
 
+Pinata (https://www.pinata.cloud/) is an IPFS provider and this project requires use of Pinata and its APIs. Signing up for Pinata will be required to get an API Key and Secret.
+
+The XRPL Account and Secret can be obtained from the Devnet Faucet (https://xrpl.org/xrp-testnet-faucet.html) or from a main ledger account.
+
 Populate these fields and save the file in the api directory to complete configuration.
 
 ## Run the REST API
