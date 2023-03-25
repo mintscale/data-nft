@@ -13,9 +13,9 @@ This repo uses the XRP Ledger to help mint Data NFTs for the Auotomotive Industr
 1. XRPL NFT mint Operations
 2. IPFS Hosting Utilities
 3. NFT Collection Minting Composite Functions
-4. FASTAPI + MongoDB based Rest API to mint Data NFTs and create PDF Event History Certificates
+4. [FASTAPI](https://fastapi.tiangolo.com/) + [MongoDB](https://www.mongodb.com/) based Rest API to mint Data NFTs and create PDF Event History Certificates
 
-Currently, the FASTAPI based Rest API prototype creates an XRPL record of an Event associated with a CAR (primary key: VIN Number) and generates a composite PDF (future Data NFT) of these events on-demand. 
+Currently, the FASTAPI based Rest API prototype creates an XRPL record of an Event associated with a CAR (primary key: VIN Number) and generates a Composite History PDF Certificate of these events on-demand. 
 
 ## Repo Structure
 
