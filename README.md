@@ -22,6 +22,7 @@ Currently, the FASTAPI based Rest API prototype creates an XRPL record of an Eve
 - *aqrl_xrpl*: NFT library providing minting constructs using XRPL
 - *docs*: Code Documentation Sources
 - *scripts*: Custom scripts for ad-hoc minting
+    - *ci*: CI/CD Automation scripts
 - *site*: Scaffold Node-JS site to test mint functionality
 - *tests*: XRPL library unit tests
 - *tools*: Standalone tools to create and manage Data NFTs and NFT Collections
