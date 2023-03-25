@@ -1,0 +1,8 @@
+{
+    "pinata_api_key": "",
+    "pinata_api_secret": "",
+    "pinata_gateway": "",
+    "xrpl_account": "",
+    "xrpl_secret": "",
+    "transfer_fee": 1000
+}

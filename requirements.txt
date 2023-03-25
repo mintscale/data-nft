@@ -80,3 +80,4 @@ zipp
 gunicorn
 opentelemetry-distro
 opentelemetry-exporter-otlp
+PyPDF2

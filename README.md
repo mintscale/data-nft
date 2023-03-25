@@ -27,11 +27,46 @@ This repo uses the XRP Ledger to help mint Data NFTs for the Auotomotive Industr
     - *ipfs*: IPFS pin, unpin, list files using Pinata
     - *minter*: Define, Pin and Mint an NFT Collection on XRPL
     - *signoz*: Submodule for FASTAPI Health Monitoring Dashboard
+- *requirements.txt*: Python dependency list used by pip to install dependencies
+- *Makefile*: Install deps and run api
+- *setup.py*: Package setup file for future use
 
 
-## Build
+## Initialize Dependencies
 
-To build and test locally:
-
+In order to run the data NFT REST API locally, first install the required packages and create a Python Virtual Env by running:
+    
     $ make init
-    $ make test
+
+This will create a directory `ms` at the top level and install all the dependencies in there. The first run will take some time. Consecutive runs will be faster.
+
+## Configuration
+
+In order to run the API, an environment variable `MONGODB_URL` will need to be exported first. This should have the format:
+
+```
+export MONGODB_URL="mongodb+srv://<username>:<password>@<clusterID>.mongodb.net/<Cluster>?retryWrites=true&w=majority"
+```
+
+Create a MONGO DB instance and add in the credentials to the above command and run it in your shell. At this point another configuration file `mint_config.json` is required in the `tools/api` directory. It needs the following fields:
+
+```
+{
+    "pinata_api_key": "",
+    "pinata_api_secret": "",
+    "pinata_gateway": "",
+    "xrpl_account": "",
+    "xrpl_secret": "",
+    "transfer_fee": 1000
+}
+```
+
+Populate these fields and save the file in the api directory to complete configuration.
+
+## Run the REST API
+
+Once configuration is complete, run the API by doing:
+
+    $ make api
+
+This will initialize the API to be active at `http://127.0.0.1:8000` i.e. on localhost. 
