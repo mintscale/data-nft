@@ -73,4 +73,6 @@ Once configuration is complete, run the API by doing:
 
     $ make api
 
-This will initialize the API to be active at `http://127.0.0.1:8000` i.e. on localhost. 
+This will initialize the API to be active at `http://127.0.0.1:8000` i.e. on localhost.
+
+The API Documentation should now be available at `http://127.0.0.1:8000/docs`.
