@@ -17,6 +17,8 @@ This repo uses the XRP Ledger to help mint Data NFTs for the Auotomotive Industr
 
 Currently, the FASTAPI based Rest API prototype creates an XRPL record of an Event associated with a CAR (primary key: VIN Number) and generates a Composite History PDF Certificate of these events on-demand. 
 
+![Data NFT API Components](docs/images/api_components.png)
+
 ## Repo Structure
 
 - *aqrl_xrpl*: NFT library providing minting constructs using XRPL
