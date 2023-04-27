@@ -19,6 +19,13 @@ Currently, the FASTAPI based Rest API prototype creates an XRPL record of an Eve
 
 ![Data NFT API Components](docs/images/api_components.png)
 
+## Getting Started
+
+This two minute video tutorial explains how to get started with this repo, set up dependencies and mint your first NFT with FASTAPI calls:
+
+[![IMAGE ALT TEXT](http://img.youtube.com/vi/dmk4jEippcw/0.jpg)](http://www.youtube.com/watch?v=dmk4jEippcw "MintScale Data NFT Project Introduction [2m]")
+
+
 ## Repo Structure
 
 - *aqrl_xrpl*: NFT library providing minting constructs using XRPL
